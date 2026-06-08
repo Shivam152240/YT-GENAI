@@ -5,9 +5,16 @@ const cors = require('cors')
 
 
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://frontend-pi-roan-77.vercel.app',
+    process.env.FRONTEND_URL || ''
+].filter(Boolean)
+
 app.use(cors({
-    origin : ['http://localhost:5173','https://frontend-pi-roan-77.vercel.app'],
-    credentials : true
+    origin: allowedOrigins,
+    credentials: true
 }))
 
 app.use(express.json())
