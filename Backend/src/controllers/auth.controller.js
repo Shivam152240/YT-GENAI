@@ -59,8 +59,8 @@ async function userControllerRegister(req, res) {
 async function userControllerLogin(req, res) {
     const { email, password } = req.body;
     const user = await userModel.findOne({ email })
-    if (!email) {
-        res.status(400).json({
+    if (!user) {
+        return res.status(400).json({
             message: "invalid email or password"
         })
     }
