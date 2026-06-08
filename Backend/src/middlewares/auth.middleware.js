@@ -4,13 +4,13 @@ const tokenBlackListModel = require("../models/blacklist.model")
 async function authUser(req, res, next){
     const token = req.cookies.token
     if(!token){
-        return res.status(400).json({
+        return res.status(401).json({
             message : "token not provided"
         })
     }
     const istokenBlackListed = await tokenBlackListModel.findOne({token})
     if(istokenBlackListed){
-        return res.status(400).json({
+        return res.status(401).json({
             message : "Token is invalid"
         })
     }
