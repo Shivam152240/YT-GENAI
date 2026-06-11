@@ -56,10 +56,9 @@ async function generatePdfFromHtml(htmlContent){
         const chromium = require('@sparticuz/chromium');
         const puppeteerCore = require('puppeteer-core');
         browser = await puppeteerCore.launch({
-            args: chromium.args,
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath(),
-            headless: chromium.headless,
+            args: chromium.default.args,
+            executablePath: await chromium.default.executablePath(),
+            headless: true,
             ignoreHTTPSErrors: true,
         });
     } else {
