@@ -8,7 +8,6 @@ const tokenBlackListModel = require("../models/blacklist.model.js")
  * @name userControllerRegister
  * @description register new user, expect email, username or password in the require
  * @access Public
- * 
  */
 async function userControllerRegister(req, res) {
     const { username, email, password } = req.body

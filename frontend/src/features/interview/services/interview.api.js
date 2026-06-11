@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL : 'https://yt-genai-p1lh.onrender.com',
+    baseURL : import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000' : 'https://yt-genai-p1lh.onrender.com'),
     withCredentials:true
 })
 /**
@@ -41,8 +41,8 @@ export const getAllInterviewReport = async () =>{
  */
 export const generateResumePdf = async (interviewId) =>{
     const response = await api.post(`/api/interview/resume/pdf/${interviewId}`, {}, {
+      
         responseType: "blob"
     })
-    
     return response.data
 }

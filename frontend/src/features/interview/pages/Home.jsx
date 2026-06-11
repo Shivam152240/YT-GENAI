@@ -6,6 +6,7 @@ import { useAuth} from "../../auth/hooks/useAuth";
 
 
 const Home = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate()
   const { user } = useAuth();
 const {loading, generateReport, reports, getReports} = useInterview()
@@ -43,7 +44,21 @@ if(loading){
     <main className="home">
       <div className="home-wrapper">
         {/* LEFT SIDEBAR */}
-        <aside className="sidebar">
+               {sidebarOpen && (
+  <div
+    className="sidebar-overlay"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
+        <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+
+          <div className="sidebar-close">
+           <button onClick={() => setSidebarOpen(false)}>
+              ✕
+            </button>
+</div>
+   
+
           <div className="sidebar-header">
             <h2>Your Reports</h2>
             <span className="report-count">{reports?.length || 0}</span>
@@ -59,7 +74,10 @@ if(loading){
                 <div
                   key={report._id}
                   className="report-card"
-                  onClick={() => navigate(`/interview/${report._id}`)}
+                  onClick={() => {
+  navigate(`/interview/${report._id}`);
+  setSidebarOpen(false);
+}}
                 >
                   <div className="report-title">{report.title || "Untitled Position"}</div>
                   <div className="report-date">
@@ -86,6 +104,13 @@ if(loading){
 
         {/* MAIN CONTENT */}
         <div className="main-content">
+        <button
+  className="mobile-menu-btn"
+  onClick={() => setSidebarOpen(true)}
+>
+  ☰
+</button>
+
           <header className="header">
             <h1>
               Create Your Custom <span>Interview Plan</span>

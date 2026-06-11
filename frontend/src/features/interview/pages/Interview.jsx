@@ -61,7 +61,7 @@ const QuestionCard = ({ item, index }) => {
 
 const Interview = () => {
   const navigate = useNavigate();
-
+const [showMenu, setShowMenu] = useState(false);
   const [activeSection, setActiveSection] =
     useState("Technical Questions");
 
@@ -131,7 +131,13 @@ const Interview = () => {
       <aside className="sidebar">
   {/* back arrow to home page  */}
       <div className="back-arrow">
-      <span onClick={() => navigate("/")}>Home</span>
+              
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M3 10L12 3L21 10V21H3V10Z"/>
+  </svg>
+      <span className="h" onClick={() => navigate("/")}>Home</span>
+
+
       </div>
         <h4 className="sidebar-title">
           SECTIONS
@@ -184,17 +190,31 @@ const Interview = () => {
       >
 
         {/* HEADER */}
-        <div className="content-header">
+       <div className="content-header">
+  <h2>{activeSection}</h2>
 
-          <h2>
-            {activeSection}
-          </h2>
+  <div className="header-menu">
+    <button
+      className="menu-btn"
+      onClick={() => setShowMenu(!showMenu)}
+    >
+      ⋮
+    </button>
 
-          
-          
-
-        </div>
-        
+    {showMenu && (
+      <div className="dropdown-menu">
+        <button
+          onClick={() => {
+            getResumePdf(interviewId);
+            setShowMenu(false);
+          }}
+        >
+          📄 Download Resume
+        </button>
+      </div>
+    )}
+  </div>
+</div>
 
         <div className="hr"></div>
 

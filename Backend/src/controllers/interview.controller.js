@@ -65,25 +65,9 @@ async function getAllInterviewReportController(req, res){
 async function generateReportPdfController(req, res){
     try {
         const {interviewReportId} = req.params
-        
-        // Debug: Check all reports for this user
-        const allReports = await interviewModelReport.find({user: req.user.id})
-        allReports.forEach(r => {
-            console.log('  Report ID:', r._id, 'User:', r.user)
-        })
-        
+     
         const interviewReport = await interviewModelReport.findOne({_id: interviewReportId, user: req.user.id})
     
-        
-        // Debug: Try finding without user filter
-        if(!interviewReport) {
-            const reportWithoutUserFilter = await interviewModelReport.findById(interviewReportId)
-            if(reportWithoutUserFilter) {
-                console.log('PDF Controller - Report user in DB:', reportWithoutUserFilter.user)
-                console.log('PDF Controller - Requested user:', req.user.id)
-            }
-        }
-        
         if(!interviewReport){
             return res.status(404).json({
                 message : "Interview report not found"
@@ -92,7 +76,6 @@ async function generateReportPdfController(req, res){
         
         const {resume, selfDescription, jobDescription} = interviewReport
         const pdfBuffer = await generateResumePdf({resume, selfDescription, jobDescription})
-        console.log('PDF Controller - PDF generated, size:', pdfBuffer?.length)
         
         res.set({
             'Content-Type': 'application/pdf',
